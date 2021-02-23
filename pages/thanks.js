@@ -1,12 +1,13 @@
 import Head from "next/head";
 
-export default function Home() {
+export default function Thanks() {
   return (
     <div>
       <Head>
-        <title>Elisey Martynov: Homepage</title>
+        <title>Elisey Martynov: Thanks to</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div className="">Thanks to</div>
     </div>
   );
 }
