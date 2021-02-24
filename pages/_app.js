@@ -1,8 +1,27 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
+import Nprogress from "nprogress";
+import "nprogress/nprogress.css";
+import { useEffect } from "react";
+import Particles from "react-particles-js";
 import Navigation from "../components/Navigation";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
+  Nprogress.configure({ showSpinner: false });
+
+  useEffect(() => {
+    router.events.on("routerChangeStart", Nprogress.start());
+    router.events.on("routerChangeComplete", Nprogress.done());
+
+    return () => {
+      router.events.off("routerChangeStart", Nprogress.start());
+      router.events.off("routerChangeComplete", Nprogress.done());
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -14,6 +33,23 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Navigation />
       <main>
+        <Particles
+          params={{
+            interactivity: {
+              events: { onHover: { enable: true } },
+            },
+            fpsLimit: 60,
+            particles: {
+              links: {
+                color: "#f4f4f2", // text-contrast variable
+              },
+              number: {
+                value: 70,
+              },
+            },
+          }}
+          style={{ position: "fixed", zIndex: "0" }}
+        />
         <Component {...pageProps} />
       </main>
     </>

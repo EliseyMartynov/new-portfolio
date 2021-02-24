@@ -16,7 +16,10 @@ const Javascript = () => {
         }
       </style>
       <g>
-        <polygon class="st0" points="0,0 122.88,0 122.88,122.88 0,122.88 0,0" />
+        <polygon
+          className="st0"
+          points="0,0 122.88,0 122.88,122.88 0,122.88 0,0"
+        />
         <path
           className="st1"
           fill="var(--main-color)"

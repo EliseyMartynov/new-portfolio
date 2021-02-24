@@ -16,6 +16,7 @@ a:visited {
 }
 
 main {
+  position: relative;
   display: flex;
   min-height: calc(100vh - 60px);
   background-color: var(--background);
@@ -29,4 +30,12 @@ main {
 .text {
   font-size: 1.5rem;
   line-height: 1;
+}
+
+#nprogress .bar {
+  background: var(--text-contrast) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--text-contrast), 0 0 5px var(--text-contrast) !important;
 }

@@ -1,36 +1,15 @@
 import Head from "next/head";
 import { useState } from "react";
-import Html from "../components/Skills/Html";
-import Javascript from "../components/Skills/Javascript";
-import React from "../components/Skills/React";
+import { data } from "../components/Skills/data";
 import SkillsShowBox from "../components/SkillsShowBox";
 
 export default function Skills() {
-  const data = [
-    {
-      name: "Javascript",
-      badge: <Javascript />,
-      description: "",
-    },
-    {
-      name: "React",
-      badge: <React />,
-      description: "",
-    },
-    {
-      name: "HTML",
-      badge: <Html />,
-      description: "",
-    },
-  ];
-
   const [active, setActive] = useState(data[0]);
+  const [translate, setTranslate] = useState(-50);
 
   const indexActive = data.indexOf(
     data.find((item) => item.name === active.name)
   );
-
-  const [translate, setTranslate] = useState(-50);
 
   return (
     <>
@@ -71,6 +50,7 @@ export default function Skills() {
           margin: auto;
           width: var(--container);
           height: calc(80vh - 60px);
+          z-index: 1;
         }
 
         .skills-box {
@@ -105,7 +85,7 @@ export default function Skills() {
         }
 
         .nav-item:first-child {
-          border-top-left-radius: 7px;
+          border-top-left-radius: 0px;
         }
 
         .nav-item:last-child {
@@ -129,7 +109,7 @@ export default function Skills() {
         }
 
         .active > .carousel-item {
-          background: var(--second-color);
+          background: var(--text-contrast);
           animation: carouselAnimation 0.5s ease-out;
         }
 

@@ -54,7 +54,11 @@ export default function Home() {
               ...I will try to make it quality
             </span>
             <Link href="/skills" passHref>
-              <a>
+              <a
+                style={{
+                  zIndex: 1,
+                }}
+              >
                 <Button
                   style={{
                     width: "100%",

@@ -1,6 +1,8 @@
 import Button from "./Button";
 
 const SkillsShowBox = ({ active }) => {
+  const { points } = active;
+
   return (
     <section className="show-box">
       <div className="show-skill">{active.badge}</div>
@@ -8,6 +10,14 @@ const SkillsShowBox = ({ active }) => {
         <span style={{ textAlign: "center" }} className="header">
           {active.name}
         </span>
+        <ul className="points text">
+          {points.map((point, i) => (
+            <li key={i}>
+              <span className="marker" />
+              {point}
+            </li>
+          ))}
+        </ul>
         <Button className="button">Used in</Button>
       </div>
       <style jsx>{`
@@ -37,6 +47,7 @@ const SkillsShowBox = ({ active }) => {
         .show-side {
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
           width: 100%;
         }
 
@@ -50,6 +61,27 @@ const SkillsShowBox = ({ active }) => {
           box-shadow: none;
           letter-spacing: 1rem;
           transition: 0.4s;
+        }
+
+        .points {
+          list-style-type: none;
+          padding: 1.25rem 0;
+        }
+
+        .points :global(li) {
+          display: grid;
+          grid-template-columns: 2rem 1fr;
+        }
+
+        .points :global(.marker) {
+          width: 10px;
+          height: 10px;
+          align-self: center;
+          background-color: var(--main-color);
+        }
+
+        .points :global(li:not(:last-child)) {
+          margin-bottom: 2rem;
         }
       `}</style>
     </section>
