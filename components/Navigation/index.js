@@ -11,33 +11,39 @@ const Navigation = () => {
   return (
     <>
       <nav className="nav-box">
-        <div className="nav">
-          <div className="left-side">
-            <Link href="/" passHref>
-              <a className={`home badge ${route === "/" ? "active-home" : ""}`}>
-                <HomeBadge />
-              </a>
-            </Link>
-          </div>
-          <div className="right-side">
-            <Link href="/skills" passHref>
-              <a className={`badge ${route === "/skills" ? "active" : ""}`}>
-                <SkillsBadge />
-                <span>Skills</span>
-              </a>
-            </Link>
-            <Link href="/portfolio" passHref>
-              <a className={`badge ${route === "/portfolio" ? "active" : ""}`}>
-                <PortfolioBadge />
-                <span>Portfolio</span>
-              </a>
-            </Link>
-            <Link href="/thanks" passHref>
-              <a className={`badge ${route === "/thanks" ? "active" : ""}`}>
-                <ThanksBadge />
-                <span>Thanks to</span>
-              </a>
-            </Link>
+        <div className="z-index-box">
+          <div className="nav">
+            <div className="left-side">
+              <Link href="/" passHref>
+                <a
+                  className={`home badge ${route === "/" ? "active-home" : ""}`}
+                >
+                  <HomeBadge />
+                </a>
+              </Link>
+            </div>
+            <div className="right-side">
+              <Link href="/skills" passHref>
+                <a className={`badge ${route === "/skills" ? "active" : ""}`}>
+                  <SkillsBadge />
+                  <span>Skills</span>
+                </a>
+              </Link>
+              <Link href="/portfolio" passHref>
+                <a
+                  className={`badge ${route === "/portfolio" ? "active" : ""}`}
+                >
+                  <PortfolioBadge />
+                  <span>Portfolio</span>
+                </a>
+              </Link>
+              <Link href="/thanks" passHref>
+                <a className={`badge ${route === "/thanks" ? "active" : ""}`}>
+                  <ThanksBadge />
+                  <span>Thanks to</span>
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -45,8 +51,14 @@ const Navigation = () => {
         .nav-box {
           display: flex;
           height: 60px;
-          background-color: var(--navbar-color);
           fill: var(--text-contrast);
+        }
+
+        .z-index-box {
+          display: flex;
+          background-color: var(--navbar-color);
+          width: 100%;
+          z-index: 5;
         }
 
         .nav {

@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Button from "../Button";
 
 export default function LeftSide({ data }) {
   const { current, imageIndex, setImageIndex } = data;
+
+  // Разобраться с React Transition. Добавить репо линк
 
   return (
     <>
@@ -39,14 +42,25 @@ export default function LeftSide({ data }) {
               cursor: "pointer",
             }}
           >
-            <Image
-              className="image"
-              src={current.images[imageIndex]}
-              alt="current-work-preview"
-              width={700}
-              height={300}
-              loading="lazy"
-            />
+            <div className="image-wrap">
+              {current.images.map((image, i) => (
+                <div
+                  className="image-single"
+                  style={{
+                    transform: `translateX(${i * 700 + imageIndex * -1400}px)`,
+                  }}
+                >
+                  <Image
+                    key={image}
+                    className="image"
+                    src={image}
+                    alt="current-work-preview"
+                    width={700}
+                    height={300}
+                  />
+                </div>
+              ))}
+            </div>
           </a>
           <button
             className="arrow"
@@ -60,18 +74,49 @@ export default function LeftSide({ data }) {
           </button>
         </div>
         <div className="description text">
-          {current.description}
+          <span>{current.description}</span>
+          <div className="buttons">
+            <a
+              href={current.repo}
+              referrerPolicy="no-referrer"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{
+                cursor: "pointer",
+              }}
+              className="link"
+            >
+              <Button>Code repo</Button>
+            </a>
+            <a
+              href={current.link}
+              referrerPolicy="no-referrer"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{
+                cursor: "pointer",
+              }}
+              className="link"
+            >
+              <Button className="second-btn">Link to project</Button>
+            </a>
+          </div>
           <div className="tags">
-            {current.tags.map((tag, i) => {
-              if (tag === "pet") {
-                return (
-                  <div key={`${tag}-${i}`} className="tag pet">
-                    <i className="material-icons">pets</i>
-                    pet-project
+            {current.tags.map((tag, i) =>
+              tag === "pet" ? (
+                <div key={`${tag}-${i}`} className="tag pet">
+                  <i className="material-icons">pets</i>
+                  pet-project
+                </div>
+              ) : (
+                tag === "test" && (
+                  <div key={`${tag}-${i}`} className="tag test">
+                    <i className="material-icons">school</i>
+                    test-task
                   </div>
-                );
-              }
-            })}
+                )
+              )
+            )}
           </div>
         </div>
       </div>
@@ -81,17 +126,6 @@ export default function LeftSide({ data }) {
           width: 70%;
           flex-direction: column;
           height: 100%;
-          animation: intro 1s ease-out;
-        }
-
-        @keyframes intro {
-          0% {
-            transform: translateX(-1000px);
-          }
-
-          100% {
-            transform: translateX(0px);
-          }
         }
 
         .image-box {
@@ -99,6 +133,19 @@ export default function LeftSide({ data }) {
           justify-content: center;
           align-items: center;
           margin-bottom: 2rem;
+        }
+
+        .image-wrap {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          height: 300px;
+          z-index: 2;
+          overflow: hidden;
+        }
+
+        .image-single {
+          transition: transform 0.4s;
         }
 
         :global(.image) {
@@ -134,17 +181,51 @@ export default function LeftSide({ data }) {
 
         .description {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: space-between;
           margin: 0 auto;
           background: var(--second-rgba);
-          padding: 2rem 2rem;
+          padding: 3rem 2rem 1.5rem;
           height: 100%;
           z-index: 1;
           text-align: center;
           position: relative;
           font-size: 1rem;
           width: 100%;
+        }
+
+        .description > :global(span) {
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
+
+        .description .buttons {
+          display: flex;
+          width: 100%;
+        }
+
+        .link:first-child {
+          margin-right: 10px;
+        }
+
+        .link {
+          width: 50%;
+        }
+
+        .link :global(button) {
+          width: 100%;
+        }
+
+        .link > :global(.second-btn) {
+          border-color: var(--main-color);
+          background-color: transparent;
+        }
+
+        .link > :global(.second-btn:hover) {
+          background-color: var(--main-color);
+          color: var(--text-contrast);
         }
 
         .tags {

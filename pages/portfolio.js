@@ -1,7 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { customSelect, customTheme } from "../components/customSelectProps";
 import { portfolio as portfolioInitial } from "../components/Portoflio/data";
 import LeftSide from "../components/Portoflio/LeftSide";
@@ -12,6 +13,7 @@ export default function Portfolio() {
   const [imageIndex, setImageIndex] = useState(0);
   const [selectedType, setSelectedType] = useState("all");
   const [selectedSkills, setSelectedSkills] = useState([]);
+  const [animationDirection, setAnimationDirection] = useState("down");
 
   const projectType = [
     { value: "all", label: "All" },
@@ -30,7 +32,12 @@ export default function Portfolio() {
   ];
 
   const selectProject = (index) => {
+    const currentIndex = portfolioInitial.indexOf(
+      portfolioInitial.find((item, i) => item.id === current.id)
+    );
+    setAnimationDirection(currentIndex > index ? "up" : "down");
     setCurrent(portfolio[index]);
+    setImageIndex(0);
   };
 
   const filtersHandler = ({ value, options }) => {
@@ -38,8 +45,6 @@ export default function Portfolio() {
     const optionsValues = options
       ? options.map((opt) => opt.value)
       : selectedSkills.map((opt) => opt.value);
-    console.log(valueScope);
-    console.log(optionsValues);
 
     setPortfolio(
       portfolioInitial
@@ -56,6 +61,16 @@ export default function Portfolio() {
     );
   };
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.id) {
+      setCurrent(
+        portfolioInitial.find((item) => item.id === parseInt(router.query.id))
+      );
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -63,13 +78,17 @@ export default function Portfolio() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="section">
-        <LeftSide
-          data={{
-            current,
-            imageIndex,
-            setImageIndex,
-          }}
-        />
+        <SwitchTransition mode="out-in">
+          <CSSTransition key={current.id} timeout={300} classNames="switching">
+            <LeftSide
+              data={{
+                current,
+                imageIndex,
+                setImageIndex,
+              }}
+            />
+          </CSSTransition>
+        </SwitchTransition>
         <aside className="navigation">
           <div className="selectors">
             <span>SORT</span>
@@ -236,6 +255,35 @@ export default function Portfolio() {
 
         .list-item-active .skill {
           background: var(--text-contrast);
+        }
+
+        /* ANIMATION */
+
+        :global(.switching-enter) {
+          transform: translateY(
+            ${animationDirection === "down" ? "-2000px" : "2000px"}
+          );
+        }
+
+        :global(.switching-enter-active) {
+          transform: translateY(0);
+        }
+
+        :global(.switching-exit) {
+          transform: translateY(0);
+        }
+        :global(.switching-exit-active) {
+          transform: translateY(
+            ${animationDirection === "down" ? "2000px" : "-2000px"}
+          );
+        }
+
+        :global(.switching-enter-active) {
+          transition: transform 0.3s ease-in;
+        }
+
+        :global(.switching-exit-active) {
+          transition: transform 0.5s ease-out;
         }
       `}</style>
     </>
