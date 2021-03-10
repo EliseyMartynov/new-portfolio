@@ -150,6 +150,7 @@ export default function LeftSide({ data }) {
 
         :global(.image) {
           border-radius: 7px;
+          object-fit: scale-down;
         }
 
         .arrow {

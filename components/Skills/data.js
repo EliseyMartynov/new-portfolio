@@ -56,7 +56,10 @@ const skills = [
   {
     name: "CSS",
     badge: "CSS",
-    points: ["Everyone says CSS is more difficult than you could thought of"],
+    points: [
+      "Everyone says CSS is more difficult than you could thought of",
+      "Mostly using SCSS as preprocessor",
+    ],
   },
 ];
 
