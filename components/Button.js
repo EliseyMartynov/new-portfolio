@@ -16,10 +16,11 @@ const Button = ({ style, children, className }) => {
           letter-spacing: 0.5rem;
           font-size: 1.3rem;
           cursor: pointer;
+          border: 4px solid transparent;
         }
 
         button:hover {
-          box-shadow: 0 0 0 4px var(--main-color);
+          border: 4px solid var(--main-color);
         }
       `}</style>
     </>

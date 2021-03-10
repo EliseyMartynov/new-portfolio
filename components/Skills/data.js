@@ -1,16 +1,7 @@
-import Css from "./Css";
-import Figma from "./Figma";
-import Html from "./Html";
-import Javascript from "./Javascript";
-import Node from "./Node";
-import Postgresql from "./Postgresql";
-import React from "./React";
-import Redux from "./Redux";
-
-const data = [
+const skills = [
   {
     name: "Javascript",
-    badge: <Javascript />,
+    badge: "JS",
     points: [
       "ES6+",
       "Used in every project",
@@ -21,7 +12,7 @@ const data = [
   },
   {
     name: "React",
-    badge: <React />,
+    badge: "React",
     points: [
       "My choise because of rich libraries pool for any task",
       "I've worked with UI libraries like Recharts, React-data-grid, React-beautiful-dnd and many others",
@@ -32,12 +23,12 @@ const data = [
   },
   {
     name: "Redux",
-    badge: <Redux />,
+    badge: "Redux",
     points: ["Using this mainly with Redux Toolkit"],
   },
   {
     name: "NodeJS",
-    badge: <Node />,
+    badge: "NodeJS",
     points: [
       "Sometimes I'm doing full-stack pet-development using Node",
       "Mainly used with Express",
@@ -47,7 +38,7 @@ const data = [
   },
   {
     name: "Postgresql®",
-    badge: <Postgresql />,
+    badge: "Postgresql®",
     points: [
       "I know SQL a bit and used it within Posgresql in my pet-projects",
       "Used with node-postgres",
@@ -57,23 +48,16 @@ const data = [
   },
   {
     name: "HTML",
-    badge: <Html />,
+    badge: "HTML",
     points: [
       "This is always hard to stop using divs everywhere but I'm trying...",
     ],
   },
   {
     name: "CSS",
-    badge: <Css />,
+    badge: "CSS",
     points: ["Everyone says CSS is more difficult than you could thought of"],
-  },
-  {
-    name: "Figma",
-    badge: <Figma />,
-    points: [
-      "I did prototypes of that portfolio in Figma and that increased my skills of it",
-    ],
   },
 ];
 
-export { data };
+export { skills };

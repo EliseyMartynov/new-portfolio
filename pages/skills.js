@@ -1,14 +1,14 @@
 import Head from "next/head";
 import { useState } from "react";
-import { data } from "../components/Skills/data";
-import SkillsShowBox from "../components/SkillsShowBox";
+import { skills } from "../components/Skills/data";
+import SkillsShowBox from "../components/Skills/SkillsShowBox";
 
 export default function Skills() {
-  const [active, setActive] = useState(data[0]);
+  const [active, setActive] = useState(skills[0]);
   const [translate, setTranslate] = useState(-50);
 
-  const indexActive = data.indexOf(
-    data.find((item) => item.name === active.name)
+  const indexActive = skills.indexOf(
+    skills.find((item) => item.name === active.name)
   );
 
   return (
@@ -18,12 +18,9 @@ export default function Skills() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="section">
-        <span className="header" style={{ marginBottom: "2rem" }}>
-          Skills
-        </span>
         <div className="skills-box">
           <div className="nav">
-            {data.map((item, i) => (
+            {skills.map((item, i) => (
               <div
                 key={i}
                 onClick={() => {
@@ -34,7 +31,14 @@ export default function Skills() {
                   item.name === active.name ? "active" : ""
                 }`}
               >
-                {item.badge}
+                <span
+                  style={{
+                    fontFamily: "Roboto, sans-serif",
+                    fontWeight: "100",
+                  }}
+                >
+                  {item.badge}
+                </span>
                 <div className="carousel-item" />
               </div>
             ))}
@@ -43,24 +47,16 @@ export default function Skills() {
         </div>
       </section>
       <style jsx>{`
-        .section {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin: auto;
-          width: var(--container);
-          height: calc(80vh - 60px);
-          z-index: 1;
-        }
-
         .skills-box {
           display: flex;
           flex-direction: column;
-          background-color: var(--second-color);
+          background: var(--second-rgba);
           width: 100%;
+          height: 100%;
           border-radius: 7px;
-          box-shadow: 0 0 0 4px var(--main-color);
+          border: 4px solid var(--main-color);
           overflow-y: auto;
+          z-index: 1;
         }
 
         .nav {
@@ -74,14 +70,24 @@ export default function Skills() {
         .nav-item {
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
           cursor: pointer;
           width: 100%;
-          fill: var(--text-contrast);
+          color: var(--text-contrast);
           padding-top: 4px;
+          font-size: 1.25rem;
+        }
+
+        .nav-item > :global(span) {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .nav-item:hover {
-          fill: var(--second-color);
+          color: var(--second-color);
         }
 
         .nav-item:first-child {
@@ -94,11 +100,6 @@ export default function Skills() {
 
         .nav-item:not(:last-child) {
           margin-right: 0.5rem;
-        }
-
-        .nav-item :global(svg) {
-          width: 100%;
-          height: 100%;
         }
 
         .carousel-item {
@@ -124,7 +125,7 @@ export default function Skills() {
         }
 
         .active:hover {
-          fill: var(--text-contrast);
+          color: var(--text-contrast);
         }
       `}</style>
     </>

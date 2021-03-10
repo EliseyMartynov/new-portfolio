@@ -13,6 +13,8 @@ function MyApp({ Component, pageProps }) {
   Nprogress.configure({ showSpinner: false });
 
   useEffect(() => {
+    window.opener = null;
+
     router.events.on("routerChangeStart", Nprogress.start());
     router.events.on("routerChangeComplete", Nprogress.done());
 
@@ -28,6 +30,14 @@ function MyApp({ Component, pageProps }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Icons"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;700&display=swap"
           rel="stylesheet"
         />
       </Head>

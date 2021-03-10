@@ -14,45 +14,46 @@ export default function Home() {
         <section className="section">
           <Me />
           <div className="side">
-            <span className="header">Hello</span>
-            <span
-              style={{
-                marginBottom: "2rem",
-              }}
-              className="header"
-            >
-              I'm Elisey Martynov
-            </span>
-            <span className="text">I'm front-end developer.</span>
-            <span
-              style={{
-                marginBottom: "2rem",
-              }}
-              className="text"
-            >
-              Sometimes, I'm learning back-end JS to be prepared to work as
-              full-stack.
-            </span>
-            <span
-              style={{
-                marginBottom: "2rem",
-              }}
-              className="header"
-            >
-              22 Y.O.
-            </span>
-            <span className="text">
-              If your product is going to be really usefull...
-            </span>
-            <span
-              style={{
-                textAlign: "end",
-                marginBottom: "2rem",
-              }}
-              className="text"
-            >
-              ...I will try to make it quality
-            </span>
+            <div className="text-box">
+              <span className="header">Hello</span>
+              <span
+                style={{
+                  marginBottom: "2rem",
+                }}
+                className="header"
+              >
+                I'm Elisey Martynov
+              </span>
+              <span className="text">I'm front-end developer.</span>
+              <span
+                style={{
+                  marginBottom: "2rem",
+                }}
+                className="text"
+              >
+                Sometimes, I'm learning back-end JS to be prepared to work as
+                full-stack.
+              </span>
+              <span
+                style={{
+                  marginBottom: "2rem",
+                }}
+                className="header"
+              >
+                22 Y.O.
+              </span>
+              <span className="text">
+                If your product is going to be really usefull...
+              </span>
+              <span
+                style={{
+                  textAlign: "end",
+                }}
+                className="text"
+              >
+                ...I will try to make it quality
+              </span>
+            </div>
             <Link href="/skills" passHref>
               <a
                 style={{
@@ -72,6 +73,10 @@ export default function Home() {
         </section>
       </div>
       <style jsx>{`
+        :global(.section) {
+          flex-direction: row;
+        }
+
         .section-wrapper {
           margin: auto;
           width: var(--container);
@@ -93,6 +98,16 @@ export default function Home() {
         .side {
           display: flex;
           flex-direction: column;
+        }
+
+        .text-box {
+          display: flex;
+          flex-direction: column;
+          z-index: 1;
+          background: var(--second-rgba);
+          border-radius: 7px;
+          padding: 1rem 3rem;
+          margin-bottom: 2rem;
         }
       `}</style>
     </>

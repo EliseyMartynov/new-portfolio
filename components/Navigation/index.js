@@ -129,6 +129,8 @@ const Navigation = () => {
           --background: #bbbfca;
           --text-contrast: #f4f4f2;
           --second-color: #e8e8e8;
+          --second-rgba: #e8e8e888;
+          --second-disabled: #e8e8e833;
           --text: #333;
           --container: 85%;
         }
