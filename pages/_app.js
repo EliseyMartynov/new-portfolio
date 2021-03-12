@@ -4,9 +4,9 @@ import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect, useState } from "react";
 import Particles from "react-particles-js";
+import "simplebar-react/dist/simplebar.min.css";
 import Navigation from "../components/Navigation";
 import "../styles/globals.css";
-import "simplebar-react/dist/simplebar.min.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
