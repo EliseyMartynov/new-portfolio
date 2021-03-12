@@ -76,7 +76,7 @@ export default function Portfolio() {
     if (parseFloat(window.getComputedStyle(document.body).width) < 700) {
       setIsMobile(true);
     }
-    setIsChromeMobile(window.platform.name === "Chrome Mobile");
+    setIsChromeMobile(navigator.vendor === "Google Inc.");
   }, []);
 
   const [isListOpen, setIsListOpen] = useState(false);
