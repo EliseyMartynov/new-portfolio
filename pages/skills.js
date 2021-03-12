@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { skills } from "../components/Skills/data";
 import SkillsShowBox from "../components/Skills/SkillsShowBox";
+import SimpleBar from "simplebar-react";
 
 export default function Skills() {
   const [active, setActive] = useState(skills[0]);
@@ -19,7 +20,7 @@ export default function Skills() {
       </Head>
       <section className="section">
         <div className="skills-box">
-          <div className="nav">
+          <SimpleBar autoHide={false} className="nav">
             {skills.map((item, i) => (
               <div
                 key={i}
@@ -42,7 +43,7 @@ export default function Skills() {
                 <div className="carousel-item" />
               </div>
             ))}
-          </div>
+          </SimpleBar>
           <SkillsShowBox active={active} />
         </div>
       </section>
@@ -55,16 +56,17 @@ export default function Skills() {
           height: 100%;
           border-radius: 7px;
           border: 4px solid var(--main-color);
-          overflow-y: auto;
           z-index: 1;
         }
 
-        .nav {
+        :global(.skills-box .nav),
+        :global(.nav .simplebar-content) {
           display: flex;
-          width: 100%;
-          height: 60px;
+          width: 100% !important;
+          height: 60px !important;
           border-bottom: 2px solid var(--main-color);
           background: var(--main-color);
+          padding: 0 !important;
         }
 
         .nav-item {
@@ -126,6 +128,25 @@ export default function Skills() {
 
         .active:hover {
           color: var(--text-contrast);
+        }
+
+        @media (max-width: 650px) {
+          :global(.section) {
+            height: calc(90vh - 60px);
+          }
+
+          :global(:root) {
+            --container: 95%;
+          }
+
+          :global(.skills-box .nav),
+          :global(.nav .simplebar-content) {
+            padding: 0 0 8px !important;
+          }
+
+          .nav-item {
+            min-width: 70px;
+          }
         }
       `}</style>
     </>

@@ -1,10 +1,9 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import Button from "../Button";
 
 export default function LeftSide({ data }) {
-  const { current, imageIndex, setImageIndex } = data;
-
-  // Разобраться с React Transition. Добавить репо линк
+  const { current, imageIndex, setImageIndex, isChromeMobile } = data;
 
   return (
     <>
@@ -47,7 +46,7 @@ export default function LeftSide({ data }) {
                 <div
                   className="image-single"
                   style={{
-                    transform: `translateX(${i * 700 + imageIndex * -1400}px)`,
+                    transform: `translateX(${i * 100 + imageIndex * -200}%)`,
                   }}
                 >
                   <Image
@@ -57,6 +56,7 @@ export default function LeftSide({ data }) {
                     alt="current-work-preview"
                     width={700}
                     height={300}
+                    objectFit={current.fit ? current.fit : "fill"}
                   />
                 </div>
               ))}
@@ -150,7 +150,6 @@ export default function LeftSide({ data }) {
 
         :global(.image) {
           border-radius: 7px;
-          object-fit: scale-down;
         }
 
         .arrow {
@@ -169,11 +168,13 @@ export default function LeftSide({ data }) {
 
         .arrow:hover {
           background: var(--second-rgba);
+          color: inherit;
         }
 
         .arrow:disabled {
-          background: var(--second-disabled);
+          background: var(--second-disabled) !important;
           cursor: not-allowed;
+          color: gray;
         }
 
         .arrow > :global(i) {
@@ -184,7 +185,7 @@ export default function LeftSide({ data }) {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           margin: 0 auto;
           background: var(--second-rgba);
           padding: 3rem 2rem 1.5rem;
@@ -205,6 +206,7 @@ export default function LeftSide({ data }) {
         .description .buttons {
           display: flex;
           width: 100%;
+          margin-top: 10px;
         }
 
         .link:first-child {
@@ -233,6 +235,64 @@ export default function LeftSide({ data }) {
           position: absolute;
           top: 5px;
           right: 5px;
+        }
+
+        @media (max-width: 1600px) {
+          :global(.section) {
+            height: calc(95vh - 60px);
+          }
+
+          .image-box {
+            height: 50%;
+          }
+
+          .image-single,
+          .image-single > :global(div),
+          .image-wrap,
+          a {
+            height: 100%;
+          }
+        }
+
+        @media (max-width: 650px) {
+          :global(.section) {
+            height: calc(80vh - 60px);
+          }
+
+          .current-work {
+            width: 100%;
+          }
+
+          .image-box {
+            height: 40%;
+          }
+
+          .image-single,
+          .image-single > :global(div),
+          .image-wrap,
+          a {
+            height: 100%;
+            height: 100%;
+          }
+
+          a {
+            width: 70%;
+          }
+
+          :global(.link button) {
+            height: 100%;
+            font-size: 1rem;
+          }
+
+          .arrow:hover {
+            background: transparent;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .image-box {
+            height: ${isChromeMobile ? "50%" : "30%"};
+          }
         }
       `}</style>
     </>

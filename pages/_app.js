@@ -2,21 +2,28 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Particles from "react-particles-js";
 import Navigation from "../components/Navigation";
 import "../styles/globals.css";
+import "simplebar-react/dist/simplebar.min.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   Nprogress.configure({ showSpinner: false });
 
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     window.opener = null;
 
     router.events.on("routerChangeStart", Nprogress.start());
     router.events.on("routerChangeComplete", Nprogress.done());
+
+    if (parseFloat(window.getComputedStyle(document.body).width) < 700) {
+      setIsMobile(true);
+    }
 
     return () => {
       router.events.off("routerChangeStart", Nprogress.start());
@@ -43,23 +50,26 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Navigation />
       <main>
-        <Particles
-          params={{
-            interactivity: {
-              events: { onHover: { enable: true } },
-            },
-            fpsLimit: 60,
-            particles: {
-              links: {
-                color: "#f4f4f2", // text-contrast variable
+        {!isMobile && (
+          <Particles
+            params={{
+              interactivity: {
+                events: { onHover: { enable: true } },
               },
-              number: {
-                value: 70,
+              fpsLimit: isMobile ? 20 : 60,
+              particles: {
+                links: {
+                  color: "#f4f4f2", // text-contrast variable
+                },
+                number: {
+                  value: isMobile ? 5 : 70,
+                },
               },
-            },
-          }}
-          style={{ position: "fixed", zIndex: "0" }}
-        />
+              retina_detect: false,
+            }}
+            style={{ position: "fixed", zIndex: "0" }}
+          />
+        )}
         <Component {...pageProps} />
       </main>
     </>

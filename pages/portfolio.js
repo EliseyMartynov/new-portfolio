@@ -6,6 +6,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { customSelect, customTheme } from "../components/customSelectProps";
 import { portfolio as portfolioInitial } from "../components/Portoflio/data";
 import LeftSide from "../components/Portoflio/LeftSide";
+import SimpleBar from "simplebar-react";
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(portfolioInitial);
@@ -63,13 +64,26 @@ export default function Portfolio() {
 
   const router = useRouter();
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [isChromeMobile, setIsChromeMobile] = useState(false);
+
   useEffect(() => {
     if (router.query.id) {
       setCurrent(
         portfolioInitial.find((item) => item.id === parseInt(router.query.id))
       );
     }
+    if (parseFloat(window.getComputedStyle(document.body).width) < 700) {
+      setIsMobile(true);
+    }
+    setIsChromeMobile(window.platform.name === "Chrome Mobile");
   }, []);
+
+  const [isListOpen, setIsListOpen] = useState(false);
+
+  const openListHandler = () => {
+    setIsListOpen((state) => !state);
+  };
 
   return (
     <>
@@ -79,17 +93,25 @@ export default function Portfolio() {
       </Head>
       <section className="section">
         <SwitchTransition mode="out-in">
-          <CSSTransition key={current.id} timeout={300} classNames="switching">
+          <CSSTransition
+            key={current.id}
+            timeout={isMobile ? 800 : 300}
+            classNames="switching"
+          >
             <LeftSide
               data={{
                 current,
                 imageIndex,
                 setImageIndex,
+                isChromeMobile,
               }}
             />
           </CSSTransition>
         </SwitchTransition>
         <aside className="navigation">
+          <div onClick={() => openListHandler()} className="mobile-opener">
+            {isListOpen ? "Close" : "Open app list"}
+          </div>
           <div className="selectors">
             <span>SORT</span>
             <Select
@@ -120,30 +142,40 @@ export default function Portfolio() {
           </div>
           <div className="list">
             <span>PROJECTS</span>
-            {portfolio.map((item, i) => (
-              <div
-                onClick={() => selectProject(i)}
-                key={`${item}--${i}`}
-                className={`
+            <SimpleBar
+              style={{
+                height: "100%",
+              }}
+              autoHide={false}
+            >
+              {portfolio.map((item, i) => (
+                <div
+                  onClick={() => {
+                    selectProject(i);
+                    setIsListOpen(false);
+                  }}
+                  key={`${item}--${i}`}
+                  className={`
                 list-item
                 ${current.name === item.name ? "list-item-active" : ""}
                 `}
-              >
-                <div className="list-preview">
-                  <img src={item.images[0]} />
-                </div>
-                <div className="list-right-side">
-                  <span>{item.name}</span>
-                  <div className="skills">
-                    {item.technologies.map((tech) => (
-                      <div key={tech} className="skill">
-                        {tech}
-                      </div>
-                    ))}
+                >
+                  <div className="list-preview">
+                    <img src={item.images[0]} />
+                  </div>
+                  <div className="list-right-side">
+                    <span>{item.name}</span>
+                    <div className="skills">
+                      {item.technologies.map((tech) => (
+                        <div key={tech} className="skill">
+                          {tech}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </SimpleBar>
           </div>
         </aside>
       </section>
@@ -164,6 +196,10 @@ export default function Portfolio() {
           border-radius: 7px;
         }
 
+        .mobile-opener {
+          display: none;
+        }
+
         .selectors {
           margin-bottom: 1rem;
           padding: 1rem;
@@ -171,7 +207,8 @@ export default function Portfolio() {
         }
 
         .list {
-          padding: 0 1rem 1rem 1rem;
+          padding: 0 6px 1rem 1rem;
+          overflow: hidden;
         }
 
         .selectors > :global(span),
@@ -187,7 +224,7 @@ export default function Portfolio() {
           margin-bottom: 10px;
         }
 
-        .list-item:not(:last-child) {
+        .list-item {
           margin-bottom: 1rem;
         }
 
@@ -197,6 +234,7 @@ export default function Portfolio() {
           cursor: pointer;
           padding: 0.5rem;
           border-radius: 7px;
+          margin-right: 12px;
         }
 
         .list-item:hover {
@@ -257,6 +295,12 @@ export default function Portfolio() {
           background: var(--text-contrast);
         }
 
+        :global(.simplebar-content) {
+          display: flex;
+          flex-direction: column;
+          margin: auto 0 !important;
+        }
+
         /* ANIMATION */
 
         :global(.switching-enter) {
@@ -284,6 +328,58 @@ export default function Portfolio() {
 
         :global(.switching-exit-active) {
           transition: transform 0.5s ease-out;
+        }
+
+        @media (max-width: 650px) {
+          :global(main) {
+            max-width: 100vw;
+            overflow: hidden;
+          }
+
+          .navigation {
+            position: absolute;
+            background: var(--second-rgba-hard);
+            width: 90%;
+            height: 90%;
+            margin: 0;
+            transform: translateX(${isListOpen ? "0" : "102%"});
+            transition: 0.4s;
+          }
+
+          .mobile-opener {
+            display: flex;
+            justify-content: ${isListOpen ? "flex-end" : "center"};
+            outline: none;
+            border: none;
+            font-family: "Share Tech", monospace;
+            position: absolute;
+            width: 100px;
+            padding: 0.5rem 1rem;
+            border-radius: 7px;
+            background: var(--main-color);
+            transform: translateX(${isListOpen ? -50 : -90}px);
+            color: var(--text-contrast);
+            font-size: 1.5rem;
+            transition: transform 0.5s;
+          }
+
+          .list-item {
+            padding: 1rem;
+          }
+
+          .list-item-active {
+            background: var(--main-color) !important;
+            color: var(--text-contrast);
+          }
+
+          .skill {
+            color: var(--text);
+            background: var(--text-contrast);
+          }
+
+          :global(.switching-exit-active) {
+            transition-delay: 0.3s;
+          }
         }
       `}</style>
     </>

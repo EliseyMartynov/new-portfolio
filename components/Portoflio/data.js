@@ -33,6 +33,7 @@ const portfolio = [
     repo: "https://gitlab.com/magistrfox/spot-test",
     tags: ["test"],
     technologies: ["Javascript", "React", "HTML", "CSS"],
+    fit: "scale-down",
   },
   {
     id: 3,

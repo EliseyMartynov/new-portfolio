@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { config, Keyframes } from "react-spring/renderprops.cjs";
+import SimpleBar from "simplebar-react";
 import { portfolio as portfolioInitial } from "../Portoflio/data";
 
 const SkillsShowBox = ({ active }) => {
@@ -9,36 +9,6 @@ const SkillsShowBox = ({ active }) => {
   const projects = portfolioInitial.filter(
     (item) => item.technologies.indexOf(active.name) !== -1
   );
-
-  const Container = ({ index, children }) => {
-    const Component = Keyframes.Spring(async (next) => {
-      while (true) {
-        await next({
-          from: { transform: "translate(0px, 0px)" },
-          to: {
-            transform: `translate(${Math.random() * 5 * index}px, ${
-              (index + 1) * -15
-            }px)`,
-          },
-          delay: 0,
-          config: { ...config.slow, duration: 2000 },
-        });
-        await next({
-          to: {
-            transform: `translate(${Math.random() * 5 * index}px, ${
-              (index + 1) * 15
-            }px)`,
-          },
-          from: {
-            transform: `translate(0px, 0px)`,
-          },
-          config: { ...config.gentle, duration: 4000 },
-        });
-      }
-    });
-
-    return <Component>{children}</Component>;
-  };
 
   const router = useRouter();
 
@@ -50,23 +20,19 @@ const SkillsShowBox = ({ active }) => {
     <section className="show-box">
       <div className="show-works">
         {projects.map((project, i) => (
-          <Container index={i} key={`${project.name}-${i}`}>
-            {(props) => (
-              <div
-                onClick={() => goToProject(project.id)}
-                style={props}
-                className="project-item"
-              >
-                <Image
-                  src={project.images[0]}
-                  alt={project.name}
-                  width={100}
-                  height={100}
-                  unoptimized
-                />
-              </div>
-            )}
-          </Container>
+          <div
+            key={`${project}-${i}`}
+            onClick={() => goToProject(project.id)}
+            className={`project-item project-item-${i}`}
+          >
+            <Image
+              src={project.images[0]}
+              alt={project.name}
+              width={100}
+              height={100}
+              unoptimized
+            />
+          </div>
         ))}
       </div>
       <div className="show-side">
@@ -80,14 +46,14 @@ const SkillsShowBox = ({ active }) => {
         >
           <strong>{active.name}</strong>
         </span>
-        <ul className="points text">
+        <SimpleBar autoHide={false} className="points text">
           {points.map((point, i) => (
             <li key={i}>
               <span className="marker" />
               {point}
             </li>
           ))}
-        </ul>
+        </SimpleBar>
       </div>
       <style jsx>{`
         .project-item {
@@ -99,6 +65,30 @@ const SkillsShowBox = ({ active }) => {
           cursor: pointer;
           transition: 0.05s;
         }
+
+        ${projects
+          .map(
+            (item, i) => `
+              .project-item-${i} {
+                animation: motion-${i} 3s infinite ease-in-out;
+              }
+
+              @keyframes motion-${i} {
+                0% {
+                  transform: translate(0px, 0px);
+                }
+
+                50% {
+                  transform: translate(${i * 5}px, ${((0 + 1) / 2) * -15}px);
+                }
+
+                100% {
+                  transform: translate(0px, 0px);
+                }
+              }
+              `
+          )
+          .join("")}
 
         .project-item:hover {
           transform: scale(1.5);
@@ -117,6 +107,7 @@ const SkillsShowBox = ({ active }) => {
           width: 100%;
           height: calc(100% - 60px);
           padding: 2rem 1rem;
+          overflow-y: hidden;
         }
 
         .show-works {
@@ -134,26 +125,73 @@ const SkillsShowBox = ({ active }) => {
           width: 100%;
         }
 
-        .points {
+        :global(.points) {
           list-style-type: none;
-          padding: 1.25rem 0;
-          margin: auto 0;
+          height: 100%;
+          display: flex;
         }
 
-        .points :global(li) {
+        :global(.points) :global(li) {
           display: grid;
           grid-template-columns: 2rem 1fr;
+          padding: 0 10px 0 0;
         }
 
-        .points :global(.marker) {
+        :global(.points) :global(.marker) {
           width: 10px;
           height: 10px;
           align-self: center;
           background-color: var(--main-color);
         }
 
-        .points :global(li:not(:last-child)) {
+        :global(.points) :global(li:not(:last-child)) {
           margin-bottom: 2rem;
+        }
+
+        :global(.points) :global(li:last-child) {
+          margin-bottom: 0.5rem;
+        }
+
+        :global(.simplebar-content-wrapper) {
+          display: flex;
+        }
+
+        :global(.simplebar-content) {
+          padding: 1rem 0 !important;
+          margin: auto 0 !important;
+        }
+
+        :global(.simplebar-vertical) {
+          margin-bottom: 5px;
+        }
+
+        @media (max-width: 1600px) {
+          .project-item {
+            width: 60px;
+            height: 60px;
+          }
+
+          .show-works,
+          .show-side {
+            width: 48%;
+          }
+        }
+
+        @media (max-width: 650px) {
+          .show-box {
+            flex-direction: column;
+          }
+
+          .show-works,
+          .show-side {
+            width: 100%;
+            height: 50%;
+          }
+
+          .project-item {
+            width: 50px;
+            height: 50px;
+          }
         }
       `}</style>
     </section>

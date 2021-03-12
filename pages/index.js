@@ -109,6 +109,24 @@ export default function Home() {
           padding: 1rem 3rem;
           margin-bottom: 2rem;
         }
+
+        @media (max-width: 650px) {
+          :global(.section) {
+            flex-direction: column;
+          }
+
+          :global(:root) {
+            --container: 95%;
+          }
+
+          :global(.section) > :global(svg) {
+            margin: auto 0 1rem !important;
+          }
+
+          .side {
+            height: 70%;
+          }
+        }
       `}</style>
     </>
   );

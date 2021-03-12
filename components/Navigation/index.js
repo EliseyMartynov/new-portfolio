@@ -133,6 +133,27 @@ const Navigation = () => {
           color: var(--navbar-color);
           fill: var(--navbar-color);
         }
+
+        @media (max-width: 650px) {
+          .left-side {
+            align-items: center;
+            width: 30%;
+          }
+
+          .right-side {
+            width: 70%;
+          }
+
+          .right-side .badge {
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          .right-side .badge > :global(svg) {
+            transform: scale(0.8);
+            margin: auto 0;
+          }
+        }
       `}</style>
       <style global jsx>{`
         :root {
@@ -142,6 +163,7 @@ const Navigation = () => {
           --text-contrast: #f4f4f2;
           --second-color: #e8e8e8;
           --second-rgba: #e8e8e888;
+          --second-rgba-hard: #e8e8e8f8;
           --second-disabled: #e8e8e833;
           --text: #333;
           --container: 85%;

@@ -7,7 +7,7 @@ export default function Thanks() {
         <title>Elisey Martynov: Thanks to</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="">Thanks to</div>
+      <div className="">TO DO</div>
     </div>
   );
 }
