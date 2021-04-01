@@ -1,6 +1,24 @@
-const portfolio = [
+const data = [
   {
-    id: 1,
+    name: "NextJS landing for Annti",
+    description: `WARNING! Landing page from the link may looks different.
+                  Basically, that was responsive static landing page builded with NEXT.
+                  Requirements were make it super cross-browser and cross-device.
+                  Unfortunately, code repo is private.`,
+    images: [
+      "/images/Annti1.png",
+      "/images/Annti2.png",
+      "/images/Annti3.png",
+      "/images/Annti4.png",
+      "/images/Annti5.png",
+      "/images/Annti6.png",
+    ],
+    link: "https://annti.design/",
+    tags: ["commercial"],
+    technologies: ["Javascript", "React", "HTML", "CSS"],
+    fit: "scale-down",
+  },
+  {
     name: "Reactive todo app (full-stack)",
     description:
       "Todo app based on PostgreSQL | EXPRESS | REACT | NODE stack. Big thanks to Traversy Media who shows how to work with full-stack apps.",
@@ -19,7 +37,6 @@ const portfolio = [
     ],
   },
   {
-    id: 2,
     name: "React mobile imitation app",
     description: `WARNING! API of employer is depricated that's why api calls functionality will not work.
       Anyways that was an imitatin of a mobile app with React and 'Google map react' package.
@@ -36,7 +53,6 @@ const portfolio = [
     fit: "scale-down",
   },
   {
-    id: 3,
     name: "Node app with AdminBro",
     description: `WARNING! I don't post email and password here to avoid changing data by random people. This can break the chart.
       Anyways that was a test task. You can check the readme in repo to get more details.
@@ -48,5 +64,9 @@ const portfolio = [
     technologies: ["NodeJS", "Postgresql®", "Javascript", "React"],
   },
 ];
+
+let idGen = 0;
+
+const portfolio = data.map((item) => ({ ...item, id: idGen++ }));
 
 export { portfolio };

@@ -70,6 +70,10 @@ main {
   margin-right: 5px;
 }
 
+.tag.commercial {
+  background-color: plum;
+}
+
 .tag.pet {
   background-color: lightgreen;
 }

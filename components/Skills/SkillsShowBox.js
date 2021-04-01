@@ -106,6 +106,8 @@ const SkillsShowBox = ({ active }) => {
 
         .show-works {
           display: flex;
+          height: fit-content;
+          align-self: center;
           justify-content: center;
           align-items: center;
           flex-wrap: wrap;

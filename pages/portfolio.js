@@ -18,6 +18,7 @@ export default function Portfolio() {
 
   const projectType = [
     { value: "all", label: "All" },
+    { value: "commercial", label: "Commercial" },
     { value: "pet", label: "Pet projects" },
     { value: "test", label: "Test tasks for jobs" },
   ];

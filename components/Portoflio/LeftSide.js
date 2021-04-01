@@ -45,6 +45,7 @@ export default function LeftSide({ data }) {
               {current.images.map((image, i) => (
                 <div
                   className="image-single"
+                  key={i}
                   style={{
                     transform: `translateX(${i * 100 + imageIndex * -200}%)`,
                   }}
@@ -76,18 +77,20 @@ export default function LeftSide({ data }) {
         <div className="description text">
           <span>{current.description}</span>
           <div className="buttons">
-            <a
-              href={current.repo}
-              referrerPolicy="no-referrer"
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{
-                cursor: "pointer",
-              }}
-              className="link"
-            >
-              <Button>Code repo</Button>
-            </a>
+            {current.repo && (
+              <a
+                href={current.repo}
+                referrerPolicy="no-referrer"
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{
+                  cursor: "pointer",
+                }}
+                className="link"
+              >
+                <Button>Code repo</Button>
+              </a>
+            )}
             <a
               href={current.link}
               referrerPolicy="no-referrer"
@@ -103,7 +106,12 @@ export default function LeftSide({ data }) {
           </div>
           <div className="tags">
             {current.tags.map((tag, i) =>
-              tag === "pet" ? (
+              tag === "commercial" ? (
+                <div key={`${tag}-${i}`} className="tag commercial">
+                  <i className="material-icons">grade</i>
+                  commercial
+                </div>
+              ) : tag === "pet" ? (
                 <div key={`${tag}-${i}`} className="tag pet">
                   <i className="material-icons">pets</i>
                   pet-project
@@ -205,6 +213,7 @@ export default function LeftSide({ data }) {
 
         .description .buttons {
           display: flex;
+          justify-content: center;
           width: 100%;
           margin-top: 10px;
         }
@@ -219,6 +228,11 @@ export default function LeftSide({ data }) {
 
         .link :global(button) {
           width: 100%;
+        }
+
+        .link :global(button:hover) {
+          border-color: transparent;
+          background: var(--text-contrast);
         }
 
         .link > :global(.second-btn) {
