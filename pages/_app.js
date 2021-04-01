@@ -11,6 +11,8 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
+  //force pipeline comment
+
   Nprogress.configure({ showSpinner: false });
 
   const [isMobile, setIsMobile] = useState(false);
