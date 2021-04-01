@@ -23,7 +23,7 @@ const SkillsShowBox = ({ active }) => {
           <div
             key={`${project}-${i}`}
             onClick={() => goToProject(project.id)}
-            className={`project-item project-item-${i}`}
+            className="project-item"
           >
             <Image
               src={project.images[0]}
@@ -66,29 +66,23 @@ const SkillsShowBox = ({ active }) => {
           transition: 0.05s;
         }
 
-        ${projects
-          .map(
-            (item, i) => `
-              .project-item-${i} {
-                animation: motion-${i} 3s infinite ease-in-out;
-              }
+        .project-item {
+          animation: motion 3s infinite ease-in-out;
+        }
 
-              @keyframes motion-${i} {
-                0% {
-                  transform: translate(0px, 0px);
-                }
+        @keyframes motion {
+          0% {
+            transform: translate(0px, 0px);
+          }
 
-                50% {
-                  transform: translate(${i * 5}px, ${((0 + 1) / 2) * -15}px);
-                }
+          50% {
+            transform: translate(0, -10px);
+          }
 
-                100% {
-                  transform: translate(0px, 0px);
-                }
-              }
-              `
-          )
-          .join("")}
+          100% {
+            transform: translate(0px, 0px);
+          }
+        }
 
         .project-item:hover {
           transform: scale(1.5);
